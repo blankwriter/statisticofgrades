@@ -46,10 +46,11 @@ public class App {
                 }
             }
         }
-
+        // Get the maximum and minumum grade 
         maximumGrade = Arrays.stream(scores).max().getAsInt();
         minimumGrade = Arrays.stream(scores).min().getAsInt();
-
+       
+        // Get the total sum of grades 
         for (int score : scores) {
             sumOfGrades += score; // sumofGrades = sumofGrades + scores
 
@@ -65,15 +66,15 @@ public class App {
             stats[0]++;
         }
     }
-
+       //Get the average grade
         averageGrade = (double) sumOfGrades / noOfStudent;
             System.out.println("Values:\n");
-            System.out.println("The maximum grade is " + maximumGrade);
-            System.out.println("The minimum grade is " + minimumGrade);
-            System.out.println("The average grade is " + averageGrade);
+            System.out.println("The maximum grade is " + maximumGrade); //Print out the maximum grade 
+            System.out.println("The minimum grade is " + minimumGrade); //Print out the minimum grade
+            System.out.println("The average grade is " + averageGrade);  //Print out the average grade
 
         System.out.println("\nGraph:\n");
-        int maxHeight = getMax(stats);
+        int maxHeight = getMax(stats); //Handle the height of the Histogram
         for (int i = maxHeight; i > 0; i--){    //
             System.out.printf("%3d >", i);
             for (int stat : stats) {
@@ -88,6 +89,7 @@ public class App {
         }
         System.out.println("    +-----------+---------+---------+---------+---------+");
         System.out.println("     I    0-20   I  21-40  I   41-60  I  61-80  I  81-100 I");
+        scanner.close();
     }
 
     private static int getMax(int[] array) {
@@ -98,7 +100,7 @@ public class App {
             }
         }
         return max;
-
+     
 
     }
 }

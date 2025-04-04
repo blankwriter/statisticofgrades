@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -9,22 +10,48 @@ public class App {
         double averageGrade;
         int sumOfGrades = 0;
         int[] stats = new int[5];
-
-        System.out.println("Enter the number of students: ");
-        noOfStudent = scanner.nextInt();
+ // Get number of students with error handling
+        while (true) {
+            try {
+                System.out.println("Enter the number of students: ");
+                noOfStudent = scanner.nextInt();
+                if (noOfStudent <= 0) {
+                    System.err.println("Error: The number of students must be greater than 0.");
+                    continue;
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.err.println("Error: Please enter a valid integer.");
+                scanner.next(); // Clear invalid input
+            }
+        }
 
         int[] scores = new int[noOfStudent];
 
+        // Get student grades with error handling
         System.out.println("Enter the scores of all the students: ");
         for (int i = 0; i < noOfStudent; i++) {
-            scores[i] = scanner.nextInt();
+            while (true) {
+                try {
+                    int score = scanner.nextInt();
+                    if (score < 0 || score > 100) {
+                        System.out.println("Error: Grades must be between 0 and 100.");
+                        continue;
+                    }
+                    scores[i] = score;
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Please enter a valid integer.");
+                    scanner.next(); // Clear invalid input
+                }
+            }
         }
 
         maximumGrade = Arrays.stream(scores).max().getAsInt();
         minimumGrade = Arrays.stream(scores).min().getAsInt();
 
         for (int score : scores) {
-            sumOfGrades += score;
+            sumOfGrades += score; // sumofGrades = sumofGrades + scores
 
         if (score > 80) {
             stats[4]++;
@@ -47,7 +74,7 @@ public class App {
 
         System.out.println("\nGraph:\n");
         int maxHeight = getMax(stats);
-        for (int i = maxHeight; i > 0; i--){
+        for (int i = maxHeight; i > 0; i--){    //
             System.out.printf("%3d >", i);
             for (int stat : stats) {
                 if (stat >= i) {
